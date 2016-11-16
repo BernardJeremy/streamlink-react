@@ -13,13 +13,13 @@
     <form id="linkForm">
       <div class="container">
         <div class="head">
-          <h2>Twitch video links</h2>
+          <h2>Video Direct Links</h2>
         </div>
         <div>
           <img src="http://ttv-api.s3.amazonaws.com/assets/connect_dark.png" class="twitch-connect" href="#" />
         </div>
-        <input type="text" name="link" placeholder="URL" value="https://twitch.tv/"/><br />
-        <div class="links">Links here</div>
+        <input id="linkInput" type="text" name="link" placeholder="URL" value="https://twitch.tv/"/><br />
+        <div class="links"></div>
         <button id="submit" type="submit">
           Send
         </button>
@@ -34,15 +34,9 @@
   <script src="js/index.js"></script>
 
   <script>
-    Twitch.init({clientId: '<%= client_id %>'}, function(error, status) {
-      if (status.authenticated) {
-        // Already logged in, hide button
-        $('.twitch-connect').hide()
-      }
-
-      $('.twitch-connect').click(function() {
-        Twitch.login({scope: [], redirect_uri: '<%= redirect_uri %>'});
-      })
-    });
+    var client_id = '<%= client_id %>';
+    var redirect_uri = '<%= redirect_uri %>';
   </script>
+  <script src="js/twitch.js"></script>
+
 </html>

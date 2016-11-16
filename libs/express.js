@@ -1,7 +1,5 @@
 const express = require('express');
 const Router = require('named-routes');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet')
 
@@ -23,8 +21,6 @@ module.exports = function initExpress(conf) {
   require('../routes')(expressRouter, conf, app);
 
   // init global middleware
-  app.use(cookieParser(conf.secret));
-  app.use(bodyParser.urlencoded({ extended: true }));
   _router.registerAppHelpers(app);
 
   // init static & rendering files
