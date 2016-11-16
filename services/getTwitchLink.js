@@ -13,9 +13,13 @@ module.exports = function(parsedUrl, token) {
 
   return new Promise(function(resolve, reject) {
     getTwitchLink(type, target, token).then(function(ret){
-      console.log("Links : ", ret);
-      resolve(ret);
-
+      let html = ''
+      for (let i in ret) {
+        html += '<p>'
+        + '<a href="' + ret[i].url + '" target="_blank">' + ret[i].type + '</a>'
+        +'</p>';
+      }
+      resolve(html);
     }).catch(function(err){
       console.log("Error : ", err.message);
       reject(err);
