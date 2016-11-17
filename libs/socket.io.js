@@ -17,7 +17,7 @@ module.exports.init = function(server, conf, app) {
 
       let possibleFailText = (parsedUrl.mediaType === 'stream' ? "Stream seems to be offline" : "Video unavailable or sub-protected");
 
-      getTwitchLinkService(parsedUrl, req.token).then(function(html){
+      getTwitchLinkService(req.url, req.token).then(function(html){
         socket.emit('server.GetDirectLink', {err: null, html});
       }).catch(function(err){
         socket.emit('server.GetDirectLink', {err: "yep", html: possibleFailText});

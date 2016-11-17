@@ -1,10 +1,7 @@
 const getTwitchLink = require('node-twitch-link');
 const conf = require('../config/config.json');
 
-module.exports = function(parsedUrl, token) {
-  let type = (parsedUrl.mediaType === 'stream' ? 'channel' : 'video');
-  let target = (parsedUrl.mediaType === 'stream' ? parsedUrl.channel : parsedUrl.id.replace('v', ''));
-
+module.exports = function(url, token) {
   if (typeof token !== 'undefined' && token !== '') {
     token = {oauth_token: token};
   } else {
@@ -12,7 +9,7 @@ module.exports = function(parsedUrl, token) {
   }
 
   return new Promise(function(resolve, reject) {
-    getTwitchLink(type, target, token).then(function(ret){
+    getTwitchLink(url, token).then(function(ret){
       let html = ''
       for (let i in ret) {
         html += '<p>'
