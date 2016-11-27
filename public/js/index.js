@@ -26,7 +26,6 @@ $(function() {
         $('.links').html('Processing...');
         $('.links').show();
         socket.on('server.GetDirectLink', function(linksObj) {
-          console.log(linksObj);
           var text = linksObj.html;
 
           if (linksObj.err !== null && linksObj.html === null) {
