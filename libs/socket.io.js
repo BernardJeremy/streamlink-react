@@ -15,7 +15,7 @@ module.exports.init = function(server, conf, app) {
         return;
       }
 
-      let possibleFailText = (parsedUrl.mediaType === 'stream' ? "Stream seems to be offline" : "Video unavailable or sub-protected");
+      let possibleFailText = (req.url.indexOf('videos') === -1 ? "Stream seems to be offline" : "Video unavailable or sub-protected");
 
       getTwitchLinkService(req.url, req.token).then(function(html){
         socket.emit('server.GetDirectLink', {err: null, html});

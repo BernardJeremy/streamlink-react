@@ -4,6 +4,8 @@ const conf = require('../config/config.json');
 module.exports = function(url, token) {
   if (typeof token !== 'undefined' && token !== '') {
     token = {oauth_token: token};
+  } else if (typeof conf.host_oauth !== 'undefined' && conf.host_oauth !== '') {
+    token = {oauth_token: conf.host_oauth}
   } else {
     token = {client_id: conf.client_id}
   }
