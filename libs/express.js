@@ -1,38 +1,19 @@
 const express = require('express');
-const Router = require('named-routes');
 const morgan = require('morgan');
 const helmet = require('helmet')
 
-module.exports.app = {};
+// init express
+const app = express();
+app.use(helmet());
 
-module.exports = function initExpress() {
+if (process.env.DEBUG === 'true') {
+  app.use(morgan('dev'));
+}
 
-  let expressRouter = express.Router();
-  let _router = new Router();
-  _router.extendExpress(expressRouter);
+// init static & rendering files
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/../public'));
+app.use('/jquery', express.static(__dirname + '/../node_modules/jquery/dist/'));
+app.use('/socket.io', express.static(__dirname + '/../node_modules/socket.io-client/'));
 
-  // init express
-  let app = express();
-  app.use(helmet());
-  app.use('/', expressRouter);
-
-  if (process.env.DEBUG === 'true') {
-    app.use(morgan('dev'));
-  }
-
-  // init all routes
-  require('../routes')(expressRouter);
-
-  // init global middleware
-  _router.registerAppHelpers(app);
-
-  // init static & rendering files
-  app.set('view engine', 'ejs');
-  app.use(express.static(__dirname + '/../public'));
-  app.use('/jquery', express.static(__dirname + '/../node_modules/jquery/dist/'));
-  app.use('/socket.io', express.static(__dirname + '/../node_modules/socket.io-client/'));
-
-  module.exports.app = app;
-
-  return app;
-};
+module.exports = app;
