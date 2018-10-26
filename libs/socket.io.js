@@ -3,7 +3,7 @@ const urlParser = require('js-video-url-parser');
 
 const getTwitchLinkService = require('../services/getTwitchLink');
 
-module.exports.init = function(server, conf, app) {
+module.exports.init = function(server) {
   let io = socketIO(server);
 
   io.on('connection', function(socket){

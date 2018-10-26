@@ -1,9 +1,9 @@
-const conf = require('./config/config.json');
+require('dotenv').config();
 
-let app = require('./libs/express')(conf);
+let app = require('./libs/express')();
 
-let server = app.listen(conf.port, function () {
-  console.log('Listening on port ' + conf.port);
+let server = app.listen(process.env.PORT, function () {
+  console.log('Listening on port ' + process.env.PORT);
 });
 
-let io = require('./libs/socket.io').init(server, conf, app);
+let io = require('./libs/socket.io').init(server);

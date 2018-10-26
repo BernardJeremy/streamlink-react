@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/BernardJeremy/twitch-getlink-web-server#readme",
   "dependencies": {
+    "dotenv": "^6.1.0",
     "ejs": "^2.4.1",
     "express": "^4.12.4",
     "helmet": "^2.1.2",

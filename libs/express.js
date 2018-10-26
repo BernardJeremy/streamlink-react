@@ -5,7 +5,7 @@ const helmet = require('helmet')
 
 module.exports.app = {};
 
-module.exports = function initExpress(conf) {
+module.exports = function initExpress() {
 
   let expressRouter = express.Router();
   let _router = new Router();
@@ -16,12 +16,12 @@ module.exports = function initExpress(conf) {
   app.use(helmet());
   app.use('/', expressRouter);
 
-  if (conf.debug) {
+  if (process.env.DEBUG === 'true') {
     app.use(morgan('dev'));
   }
 
   // init all routes
-  require('../routes')(expressRouter, conf, app);
+  require('../routes')(expressRouter);
 
   // init global middleware
   _router.registerAppHelpers(app);
