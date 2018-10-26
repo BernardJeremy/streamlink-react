@@ -1,6 +1,6 @@
 const homeController = require('./controllers/home');
 
-module.exports = function (app) {
+module.exports = (app) => {
   /*
     HOME
    */

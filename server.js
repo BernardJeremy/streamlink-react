@@ -1,11 +1,10 @@
 require('dotenv').config();
 
-let app = require('./libs/express');
-
+const app = require('./libs/express');
 require('./routes')(app);
 
-let server = app.listen(process.env.PORT, function () {
-  console.log('Listening on port ' + process.env.PORT);
+const server = app.listen(process.env.PORT, () => {
+  console.log(`Listening on port ${process.env.PORT}`);
 });
 
-let io = require('./libs/socket.io').init(server);
+const io = require('./libs/socket.io').init(server);

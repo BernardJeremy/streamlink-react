@@ -3,24 +3,26 @@ const urlParser = require('js-video-url-parser');
 
 const getTwitchLinkService = require('../services/getTwitchLink');
 
-module.exports.init = function(server) {
-  let io = socketIO(server);
+module.exports.init = (server) => {
+  const io = socketIO(server);
 
-  io.on('connection', function(socket){
-    socket.on('webapp.GetDirectLink', function(req) {
-      let parsedUrl = urlParser.parse(req.url);
+  io.on('connection', (socket) => {
+    socket.on('webapp.GetDirectLink', (req) => {
+      const parsedUrl = urlParser.parse(req.url);
 
       if (!parsedUrl) {
-        socket.emit('server.GetDirectLink', {err: "yep", html: "Twitch URL not recognized or incomplete"});
+        socket.emit('server.GetDirectLink', { err: "yep", html: "Twitch URL not recognized or incomplete" });
         return;
       }
 
-      let possibleFailText = (req.url.indexOf('videos') === -1 ? "Stream seems to be offline" : "Video unavailable or sub-protected");
+      const possibleFailText = req.url.indexOf('videos') === -1 ?
+        "Stream seems to be offline" :
+        "Video unavailable or sub-protected";
 
-      getTwitchLinkService(req.url, req.token).then(function(html){
-        socket.emit('server.GetDirectLink', {err: null, html});
-      }).catch(function(err){
-        socket.emit('server.GetDirectLink', {err: "yep", html: possibleFailText});
+      getTwitchLinkService(req.url, req.token).then((html) => {
+        socket.emit('server.GetDirectLink', { err: null, html });
+      }).catch((err) => {
+        socket.emit('server.GetDirectLink', { err: "yep", html: possibleFailText });
       });
     });
   });
