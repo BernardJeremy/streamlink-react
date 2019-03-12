@@ -13,7 +13,6 @@ class TwitchLinkInput extends React.Component {
     super(props);
     this.state = {
       twitchUrl: TWITCH_URL_PLACEOLDER,
-      hasChanged: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,27 +20,24 @@ class TwitchLinkInput extends React.Component {
   }
 
   handleSubmit(event) {
-    if (this.state.hasChanged) {
-      this.props.onUpdateLinksList([], 'Processing...');
-      DecoderApi.getDecodedContentUrl(this.state.twitchUrl).then(
-        (result) => {
-          if (result && !result.error) {
-            this.props.onUpdateLinksList(result);
-          } else {
-            this.props.onUpdateLinksList([], 'Links not found')
-          }
-        },
-        (error) => {
-          this.props.onUpdateLinksList([], 'An error occured')
+    this.props.onUpdateLinksList([], 'Processing...');
+    DecoderApi.getDecodedContentUrl(this.state.twitchUrl).then(
+      (result) => {
+        if (result && !result.error) {
+          this.props.onUpdateLinksList(result);
+        } else {
+          this.props.onUpdateLinksList([], 'Links not found')
         }
-      );
-    }
-    this.setState({ hasChanged: false });
+      },
+      (error) => {
+        this.props.onUpdateLinksList([], 'An error occured')
+      }
+    );
     event.preventDefault();
   }
 
   handleChange(event) {
-    this.setState({ twitchUrl: event.target.value, hasChanged: true });
+    this.setState({ twitchUrl: event.target.value });
   }
 
   render() {
